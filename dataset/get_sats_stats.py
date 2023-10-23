@@ -7,7 +7,7 @@ from glob import glob
 from matplotlib import pyplot as plt
 
 
-def execute(data_dir: str, save_dir: str, file_name: str, satellites: list[str], bands: list[str]):
+def execute(data_dir: str, save_dir: str, file_extension: str, satellites: list[str], bands: list[str]):
     """
     Get satellites statistics from input repository
     """
@@ -20,7 +20,7 @@ def execute(data_dir: str, save_dir: str, file_name: str, satellites: list[str],
     print(' --- Computing means and maxs --- ')
     # Get maximum and mean stats
     for sat in satellites:
-        if not os.path.exists(save_dir+sat+file_name):
+        if not os.path.exists(save_dir + sat + file_extension):
             print(' ---', sat, '--- ')
 
             # Get stats for every bands
@@ -50,7 +50,7 @@ def execute(data_dir: str, save_dir: str, file_name: str, satellites: list[str],
 
             # save meta data
             np.savez(
-                save_dir + sat+file_name,
+                save_dir + sat + file_extension,
                 means=means,
                 maxs=maxs,
                 )
@@ -61,7 +61,7 @@ def execute(data_dir: str, save_dir: str, file_name: str, satellites: list[str],
         print(' ---', sat, '--- ')
 
         # Read maximums and means
-        metadata = np.load(save_dir+sat+file_name)
+        metadata = np.load(save_dir + sat + file_extension)
         maxs = metadata['maxs']
         means = metadata['means']
 
@@ -94,7 +94,7 @@ def execute(data_dir: str, save_dir: str, file_name: str, satellites: list[str],
 
         # save meta data
         np.savez(
-            save_dir + sat + file_name,
+            save_dir + sat + file_extension,
             means=means,
             stds=stds,
             maxs=maxs,

@@ -1,7 +1,7 @@
 import argparse
 import postprocess_prediction as pp
 import postprocess_gte as pg
-import create_masks_for_comp as cm
+import prob_to_masks as pm
 
 
 if __name__ == '__main__':
@@ -90,7 +90,7 @@ if __name__ == '__main__':
                 raise ValueError('mask_model_name, mask_save_dir, mask_gt, mask_pred_dir must be specified.')
 
             print(f"Execute create masks for comparison with {args.save_dir} ...")
-            cm.execute(
+            pm.execute(
                 args.index_path
                 , args.mask_gt
                 , args.mask_pred_dir

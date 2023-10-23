@@ -17,8 +17,8 @@ if __name__ == '__main__':
                         required=True, default=None)
 
     # Data retrieval parameters
-    parser.add_argument('-get_file_name', action='store', dest='get_file_name', type=str,
-                        required=True, default=None)
+    parser.add_argument('-stats_output_extension', action='store', dest='stats_output_extension', type=str,
+                        required=False, default="_metadata.npz")
     parser.add_argument('-gs', action='store', dest='get_satellites', type=str,
                         required=False, default='geoeye-1-ortho-pansharp,worldview-2-ortho-pansharp'
                                                          ',worldview-3-ortho-pansharp,worldview-4-ortho-pansharp')
@@ -50,7 +50,7 @@ if __name__ == '__main__':
                         required=False, default=512)
     parser.add_argument('-graph_image_overlap', action='store', dest='graph_image_overlap', type=float,
                         required=False, default=0.33)
-    parser.add_argument('-graph_encoding_max', action='store', dest='graph_encoding_max', type=int,
+    parser.add_argument('-graph_encoding_max_degree', action='store', dest='graph_encoding_max_degree', type=int,
                         help='Encoding max degree', required=False, default=6)
     parser.add_argument('-graph_encoding_r', action='store', dest='graph_encoding_r', type=int,
                         required=False, default=1)
@@ -66,7 +66,7 @@ if __name__ == '__main__':
                 raise ValueError('data_dir, save_dir, file_name must be specified.')
 
             print(f"Execute data retrieval process with {args.data_dir} to {args.save_dir} ...")
-            gss.execute(args.data_dir, args.save_dir, args.get_file_name
+            gss.execute(args.data_dir, args.save_dir, args.stats_output_extension
                             , [item for item in args.get_satellites.split(',')]
                             , [item for item in args.get_bands.split(',')]
                         )
@@ -105,7 +105,7 @@ if __name__ == '__main__':
 
             cg.execute(args.data_dir, args.graph_gt, args.graph_save_dir
                        , [item for item in args.get_bands.split(',')], args.graph_img_size, args.graph_overlap
-                       , args.graph_encoding_max, args.graph_encoding_r, args.graph_linestring_delta_meters)
+                       , args.graph_encoding_max_degree, args.graph_encoding_r, args.graph_linestring_delta_meters)
 
         except ValueError as ex:
             print(f"Error, exiting the create graph process execution: {ex}")

@@ -41,9 +41,9 @@ def main(config):
         solver = Solver(config, train_loader, valid_loader)
 
         # Train and sample the images
-        if config.mode == 'train':
+        if config.mode.lower() == 'train':
             solver.train()
-        elif config.mode == 'test':
+        else:
             raise NotImplementedError('Test is not implemented')
 
     except Exception as ex:
@@ -66,10 +66,6 @@ if __name__ == '__main__':
     parser.add_argument('--lr', type=float, default=5e-5)
     parser.add_argument('--beta1', type=float, default=0.5, help="Momentum1 in Adam")
     parser.add_argument('--beta2', type=float, default=0.999, help="Momentum2 in Adam")
-    parser.add_argument('--augmentation_prob', type=float, default=0.4)
-
-    parser.add_argument('--log_step', type=int, default=2)
-    parser.add_argument('--val_step', type=int, default=2)
 
     # misc
     parser.add_argument('--mode', type=str, default='train')

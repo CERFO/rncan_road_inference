@@ -37,7 +37,6 @@ class Solver(object):
         self.output_ch = config.output_ch
         # self.criterion = SupervisedLoss()
         self.criterion = SupervisedLossCompact()
-        self.augmentation_prob = config.augmentation_prob
 
         # Hyper-parameters
         self.lr = config.lr
@@ -63,10 +62,6 @@ class Solver(object):
             warmup_steps=warmup_steps,
             hold_base_rate_steps=hold_base_rate_steps,
             )
-
-        # Step size
-        self.log_step = config.log_step
-        self.val_step = config.val_step
 
         # Path
         self.model_path = config.model_path + config.exp_name + '.hdf5'

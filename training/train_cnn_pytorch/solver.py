@@ -61,10 +61,6 @@ class Solver(object):
             hold_base_rate_steps=hold_base_rate_steps,
             )
 
-        # Step size
-        self.log_step = config.log_step
-        self.val_step = config.val_step
-
         # Path
         self.model_path = config.model_path + config.exp_name + '.hdf5'
         self.mode = config.mode
