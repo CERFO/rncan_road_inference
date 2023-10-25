@@ -1,5 +1,7 @@
 # 23-1016 RNCan
 Project carried out for Natural Resources Canada to infer roads from satellite images and annotations.
+
+Questions and requests about models can be sent to the development team by [filling this form](https://forms.office.com/r/6hGARTC7nk).
 ____
 ## Solution structure
   ```
