@@ -280,7 +280,8 @@ def compute_topo_metric(G_gt_, G_p_, raster_file, output_df,
         return 0, 0, 0, 0, 0, 0
 
     if n_measurement_nodes == 0:
-        n_measurement_nodes = math.floor(min([len(G_gt_),len(G_p_)]) / 3)  # Sampling 1/3 of a graph
+        n_measurement_nodes = math.floor(max(min([len(G_gt_), len(G_p_)]), 3) / 3)  # Sampling 1/3 of a graph
+
 
     if verbose:
         print(("G_gt_.nodes():", G_gt_.nodes()))
