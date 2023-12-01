@@ -29,13 +29,13 @@ ____
   │   └── process_prediction.py - custom process of roads inference
   │
   └── training/ - Training and inference
-     ├── train_cnn_tensorflow/ - CNN training and inference with Tensorflow
+     ├── segmentation_tf/ - CNN training and inference with Tensorflow
      │   ├── keras_unet_collection/ - tensorflow models and utilities implementation
      │   └── train.py - Run training process for Tensorflow scenario
-     ├── train_cnn_pytorch/ - CNN training and inference with Pytorch
+     ├── segmentation_pt/ - CNN training and inference with Pytorch
      │   ├── settings.json - Providers metadata
      │   └── main.py - Run training process for PyTorch scenario
-     ├── train_gte_pytorch/ - GTE training and inference with Pytorch
+     ├── gte_pt/ - GTE training and inference with Pytorch
      │    ├── settings.json - Providers metadata
      │    └── main.py - run training process for PyTorch and GTE scenario
      ├── tf_env.yml - training and inference dependencies using Tensorflow
@@ -136,7 +136,7 @@ Take into account that annotations have been rasterized and transformed into gra
 #### 2.1 PyTorch
 *main.py* to start training.
 
-    python training/train_cnn_pytorch/main.py
+    python training/segmentation_pt/main.py
             --log_path C:/User/MyUser/MyProject/training/logs/
             --exp_name pytorch_compactgte_loss100_noinit_lr5e5_fulldataset
             --model_path C:/User/MyUser/MyProject/Models/
@@ -164,14 +164,25 @@ Take into account that annotations have been rasterized and transformed into gra
 * model_type: Type of architecture to train
 * cuda_idx: Id of gpu to use for training
 
+#### 2.1.1 Inference only
+Run pred.py, using its execute function, to start inference.
+
+    python training/segmentation_pt/pred.py
+            --annotations_index_path C:/User/MyUser/MyProject/data/index_annotations_final.gpkg
+            --imgs_dir C:/User/MyUser/MyProject/data/TIFFS
+            --save_dir C:/User/MyUser/MyProject/data/Datasets
+            --model_path C:/User/MyUser/MyProject/data/Models/R2AUnet_pt.pt
+
+It is necessary to provide the metadata access paths, from the [metadata](metadata) in the settings file, to the execute function.
+
 ##### settings.json
-[settings.json](training/train_cnn_pytorch/settings.json) used for providers metadata.
+[settings.json](training/segmentation_pt/settings.json) used for providers metadata.
     
     {
-      "ge_metadata": "C:/User/MyUser/MyProject/data/Datasets/geoeye-1-ortho-pansharp_metadata.npz",
-      "wv2_metadata": "C:/User/MyUser/MyProject/data/Datasets/worldview-2-ortho-pansharp_metadata.npz",
-      "wv3_metadata": "C:/User/MyUser/MyProject/data/Datasets/worldview-3-ortho-pansharp_metadata.npz",
-      "wv4_metadata": "C:/User/MyUser/MyProject/data/Datasets/worldview-4-ortho-pansharp_metadata.npz"
+      "ge_metadata": "C:/User/MyUser/MyProject/metadata/geoeye-1-ortho-pansharp_metadata.npz",
+      "wv2_metadata": "C:/User/MyUser/MyProject/metadata/worldview-2-ortho-pansharp_metadata.npz",
+      "wv3_metadata": "C:/User/MyUser/MyProject/metadata/worldview-3-ortho-pansharp_metadata.npz",
+      "wv4_metadata": "C:/User/MyUser/MyProject/metadata/worldview-4-ortho-pansharp_metadata.npz"
     }
 
 #### 2.2 PyTorch GTE
@@ -180,7 +191,7 @@ See the _2.1 PyTorch_ section for parameters and use case. Adjust the variables 
 #### 2.3 Tensorflow
 *train.py* to start training.
 
-    python training/train_cnn_pytorch/main.py
+    python training/segmentation_tf/main.py
             --models_dir C:/User/MyUser/MyProject/training/logs/
             --logs_dir C:/User/MyUser/Models/
 
