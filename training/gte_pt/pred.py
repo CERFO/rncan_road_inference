@@ -64,7 +64,9 @@ def execute(annotations_index_path: str, imgs_dir: str, save_dir: str, model_pat
 
     # load model
     model = R2AttU_Net_CERFO(img_ch=4,output_ch=n_labels)
-    state_dict = torch.load(model_path)  # Remove parallelism layers from model to run on single GPU
+    state_dict = torch.load(model_path)
+
+    # Remove parallelism layers from model to run on single GPU
     new_state_dict = OrderedDict()
     for k, v in state_dict.items():
         name = k[7:] # remove `module.`
