@@ -55,7 +55,7 @@ def get_new_index(idx, last_bool, done_bool, dim, load_size, pred_file, overlap=
     return idx, last_bool, done_bool
 
 
-def execute(annotations_index_path: str, imgs_dir: str, save_dir: str, state_dict_path: dict
+def execute(annotations_index_path: str, imgs_dir: str, save_dir: str, model_path: dict
             , model_name: str = 'attr2unet', model_backbone: str = 'pytorch', img_res: float = 0.5
             , pred_res: float = 0.5, pred_size: int = 512, overlap: float = 0.25, n_labels: int = 19, batch_size: int = 8
             , max_degree: int = 6):
@@ -64,7 +64,7 @@ def execute(annotations_index_path: str, imgs_dir: str, save_dir: str, state_dic
 
     # load model
     model = R2AttU_Net_CERFO(img_ch=4,output_ch=n_labels)
-    state_dict = torch.load(state_dict_path)
+    state_dict = torch.load(model_path)  # Remove parallelism layers from model to run on single GPU
     new_state_dict = OrderedDict()
     for k, v in state_dict.items():
         name = k[7:] # remove `module.`
